@@ -25,14 +25,15 @@ def main():
     sensor = adb.BNO055_I2C(i2c)
 
     while True:
-        writeToFile(datetime.now() + "")
-        writeToFile("gyro: " + str(sensor.gyro), end = " ")
-        writeToFile("acceleration: " + str(sensor.acceleration), end = " ")
-        writeToFile("gravity: " + str(sensor.gravity), end = " ")
-        writeToFile("magnetic: " + str(sensor.magnetic), end = " ")
+        writeToFile("Time: "+str(datetime.now()))
+        writeToFile("gyro: " + str(sensor.gyro))
+        writeToFile("acceleration: " + str(sensor.acceleration))
+        writeToFile("gravity: " + str(sensor.gravity))
+        writeToFile("magnetic: " + str(sensor.magnetic))
         writeToFile("euler: " + str(sensor.euler))
-        time.sleep(1)
 
         data = bme280.sample(bus, address, calib_param)
         writeToFile("TEMP: " + str(data.temperature) + " PRESS: " + str(data.pressure) + " HUMID: " + str(data.humidity))
+       	writeToFile("\n")
         time.sleep(1)
+
