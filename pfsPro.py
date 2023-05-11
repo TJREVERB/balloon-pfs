@@ -6,12 +6,13 @@ import threading
 #install pkgs
 def pkgInstall():
     # radio pkgs
-    subprocess.run("conda install -c conda-forge gnuradio", shell = True)
-    subprocess.run("conda install -c conda-forge gnuradio-osmosdr", shell = True)
-    subprocess.run("conda install -c conda-forge sip", shell = True)
-    subprocess.run("conda install -c conda-forge pyqt5-sip", shell = True)
-    subprocess.run("conda install -c conda-forge gnuradio-qtgui", shell = True)
-    subprocess.run("conda install -c conda-forge argparse", shell = True)
+    #subprocess.run("conda install -c conda-forge gnuradio", shell = True)
+    #subprocess.run("conda install -c conda-forge gnuradio-osmosdr", shell = True)
+    #subprocess.run("conda install -c conda-forge sip", shell = True)
+    #subprocess.run("conda install -c conda-forge pyqt5-sip", shell = True)
+    #subprocess.run("conda install -c conda-forge gnuradio-qtgui", shell = True)
+    #subprocess.run("conda install -c conda-forge argparse", shell = True)
+    subprocess.run("conda install -c conda-forge hackrf", shell=True)
     # sensor pkgs
     subprocess.run("sudo apt-get install i2c-tools python3-pip", shell = True)
     subprocess.run("sudo pip3 install RPi.bme280", shell = True)
