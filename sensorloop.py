@@ -1,11 +1,3 @@
-import time
-import adafruit_bno055 as adb
-import board
-import time
-import bme280
-import smbus2
-from datetime import datetime
-
 def writeToFile(str):
     try:
         f = open("sensor.txt","x")
@@ -15,6 +7,14 @@ def writeToFile(str):
 
 
 def main():
+    import time
+    import adafruit_bno055 as adb
+    import board
+    import time
+    import bme280
+    import smbus2
+    from datetime import datetime
+    
     i2c = board.I2C()
 
     port = 1
