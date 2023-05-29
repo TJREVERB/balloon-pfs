@@ -18,7 +18,7 @@ def pkgInstall():
     subprocess.run("sudo apt-get install i2c-tools", shell = True)
     subprocess.run("sudo pip3 install RPi.bme280", shell = True)
     subprocess.run("sudo pip3 install adafruit-circuitpython-bno055", shell = True)
-   
+    subprocess.run("sudo pip3 install adafruit-circuitpython-dps310", shell = True)
     print("Pkgs installed")
    
 i=0

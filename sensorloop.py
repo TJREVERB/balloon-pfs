@@ -1,10 +1,6 @@
-def writeToFile(str):
-    try:
-        f = open("sensor.txt","x")
-    except FileExistsError:
-        f = open("sensor.txt","a")
-    f.write(str + "\n")
-
+def writeToFile(data):
+    with open("sensor.txt", "a") as f:
+        f.write(data + "\n")
 
 def main():
     import time
@@ -14,26 +10,42 @@ def main():
     import bme280
     import smbus2
     from datetime import datetime
-    
+    import adafruit_dps310
+
     i2c = board.I2C()
 
     port = 1
-    address = 0x77
+    address_bme = 0x77
+    address_dps = 0x77
     bus = smbus2.SMBus(port)
-    calib_param = bme280.load_calibration_params(bus, address)
+    calib_param = bme280.load_calibration_params(bus, address_bme)
 
-    sensor = adb.BNO055_I2C(i2c)
+    bno_sensor = adb.BNO055_I2C(i2c)
+    dps_sensor = adafruit_dps310.DPS310(bus, address=address_dps)
 
     while True:
-        writeToFile("Time: "+str(datetime.now()))
-        writeToFile("gyro: " + str(sensor.gyro))
-        writeToFile("acceleration: " + str(sensor.acceleration))
-        writeToFile("gravity: " + str(sensor.gravity))
-        writeToFile("magnetic: " + str(sensor.magnetic))
-        writeToFile("euler: " + str(sensor.euler))
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        writeToFile("Time: " + timestamp)
 
-        data = bme280.sample(bus, address, calib_param)
-        writeToFile("TEMP: " + str(data.temperature) + " PRESS: " + str(data.pressure) + " HUMID: " + str(data.humidity))
-       	writeToFile("\n")
+        writeToFile("Gyro: " + str(bno_sensor.gyro))
+        writeToFile("Acceleration: " + str(bno_sensor.acceleration))
+        writeToFile("Gravity: " + str(bno_sensor.gravity))
+        writeToFile("Magnetic: " + str(bno_sensor.magnetic))
+        writeToFile("Euler: " + str(bno_sensor.euler))
+
+        bme_data = bme280.sample(bus, address_bme, calib_param)
+        writeToFile("Temperature: " + str(bme_data.temperature) + " C")
+        writeToFile("Pressure: " + str(bme_data.pressure) + " Pa")
+        writeToFile("Humidity: " + str(bme_data.humidity) + " %")
+
+        dps_temp = dps_sensor.temperature
+        dps_pressure = dps_sensor.pressure
+        writeToFile("DPS310 Temperature: " + str(dps_temp) + " C")
+        writeToFile("DPS310 Pressure: " + str(dps_pressure) + " Pa")
+
+        writeToFile("")  # Empty line for separation
+
         time.sleep(1)
 
+if __name__ == "__main__":
+    main()
